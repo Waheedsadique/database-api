@@ -176,8 +176,25 @@ class UserRead(UserBase):
 class UserUpdate(UserBase):
    pass
 
+class UserDetail(SQLModel):
+    country_id : Optional[int] = Field(default=None, foreign_key="country.id")
+    pin_id : Optional[int] = Field(default=None, foreign_key="pin.id")
+    city_id : Optional[int] = Field(default=None, foreign_key="city.id")
+    package_id : Optional[int] = Field(default=None, foreign_key="package.id")
+    role_id : Optional[int] = Field(default=None, foreign_key="role.id")
+    referral_id : Optional[int] = Field(default=None, foreign_key="referral.id")
+    withdraw_id : Optional[int] = Field(default=None, foreign_key="withdraw.id")
 
-class UserReadWithAll(UserRead):
+class UserReadWithAll(SQLModel):
+    id : int
+    nation_id : str
+    email : str
+    password : str
+    phone : str
+    currency : str
+    created_at: str
+    updated_at: str
+    
     country : CountryRead
     pin : PinRead
     city : CityRead

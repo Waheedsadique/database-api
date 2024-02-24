@@ -418,7 +418,14 @@ def delete_withdraw(withdraw_id : int , session : Annotated[Session, Depends(get
     return {"message" : "Withdraw deleted"}
 
 
-
+@app.get("get_users")
+def select_heroes():
+    
+    with Session(engine) as session:
+        statement = select(User, Withdraw).where(User.withdraw ==   Withdraw.id)
+        results = session.exec(statement)
+        return results
+        
 
 
 
