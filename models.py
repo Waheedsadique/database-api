@@ -140,13 +140,6 @@ class UserBase(SQLModel):
     currency : str
     created_at: str = Field(default_factory=datetime.now().isoformat)
     updated_at: str = Field(default_factory=datetime.now().isoformat)
-    # country_name : str = Field(foreign_key="country.country_name")
-    # pin : str = Field(foreign_key="pin.pin")
-    # city_name : str = Field(foreign_key="city.city_name")
-    # package_name : str = Field(foreign_key="package.package_name")
-    # role_name : str = Field(foreign_key="role.role_name")
-    # referral_name : str = Field(foreign_key="referral.referral_name")
-    # withdraw_name : str = Field(foreign_key="withdraw.withdraw_name")
     country_id : Optional[int] = Field(default=None, foreign_key="country.id")
     pin_id : Optional[int] = Field(default=None, foreign_key="pin.id")
     city_id : Optional[int] = Field(default=None, foreign_key="city.id")
@@ -154,6 +147,10 @@ class UserBase(SQLModel):
     role_id : Optional[int] = Field(default=None, foreign_key="role.id")
     referral_id : Optional[int] = Field(default=None, foreign_key="referral.id")
     withdraw_id : Optional[int] = Field(default=None, foreign_key="withdraw.id")
+    
+  
+
+
 
 
 
@@ -178,3 +175,14 @@ class UserRead(UserBase):
 
 class UserUpdate(UserBase):
    pass
+
+
+class UserReadWithAll(UserRead):
+    country : CountryRead
+    pin : PinRead
+    city : CityRead
+    package : PackageRead
+    role : RoleRead
+    referral : ReferralRead
+    withdraw : WithdrawRead
+

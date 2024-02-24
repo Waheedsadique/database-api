@@ -1,7 +1,7 @@
 from fastapi import FastAPI , Depends , HTTPException, Query
 from typing import Annotated
 from sqlmodel import Session , select
-from db import  get_db , create_db_and_tables
+from db import  get_db , create_db_and_tables , engine
 from models import *
 
 
@@ -18,7 +18,7 @@ def read_root():
 
 # get all the users
 
-@app.get("/users" , response_model=list[User])
+@app.get("/users" , response_model=list[UserReadWithAll])
 def get_users(session : Annotated[Session, Depends(get_db)], offset : int = Query(default=0 , le= 4), limit : int = Query(default=2 , le=4)):
     users = session.exec(select(User).offset(offset).limit(limit)).all()
     return users
@@ -34,7 +34,7 @@ def create_user(user : UserCreate , session : Annotated[Session, Depends(get_db)
     return user_to_insert
 
 # get user by id
-@app.get("/single_users/{user_id}" , response_model=UserRead)
+@app.get("/single_users/{user_id}" , response_model=UserReadWithAll)
 def get_user_by_id(user_id : int , session : Annotated[Session, Depends(get_db)]):
     user = session.get(User , user_id)
     if not user:
@@ -416,3 +416,18 @@ def delete_withdraw(withdraw_id : int , session : Annotated[Session, Depends(get
     session.delete(withdraw_to_delete)
     session.commit()
     return {"message" : "Withdraw deleted"}
+
+
+
+
+
+
+
+        
+
+
+
+
+    
+
+
